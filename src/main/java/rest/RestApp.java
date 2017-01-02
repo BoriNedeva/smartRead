@@ -16,6 +16,7 @@ public class RestApp extends Application {
 
 	private void addRestResourceClasses(Set<Class<?>> resources) {
 		resources.add(services.TestService.class);
+		resources.add(services.UserManager.class);
 	}
 
 }
