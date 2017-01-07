@@ -11,22 +11,29 @@ public class DatastoreProvider {
 
 	private final Morphia morphia;
     private Datastore ds;
-	
-	public DatastoreProvider(Morphia morphia) {
-        this.morphia = morphia;
-        initializeInstanceIfNecessary();
+    
+	private static DatastoreProvider instance;
+    
+	private DatastoreProvider() {
+        this.morphia = new MorphiaProvider().get();
+        MongoClient mongoClient = new MongoClient(Constants.HOST, Constants.PORT);
+        ds = morphia.createDatastore(mongoClient, Constants.DB_NAME);
+        ds.ensureIndexes();
     }
 
-    private void initializeInstanceIfNecessary() {
+    /*private void initializeInstanceIfNecessary() {
         if (ds != null) {
             return;
         }
         MongoClient mongoClient = new MongoClient(Constants.HOST, Constants.PORT);
         ds = morphia.createDatastore(mongoClient, Constants.DB_NAME);
         ds.ensureIndexes();
-    }
+    }*/
     
-    public Datastore getDS() {
-        return ds;
+    public static Datastore getDS() {
+    	if (instance == null){
+    		instance = new DatastoreProvider();
+    	}
+        return instance.ds;
     }
 }
