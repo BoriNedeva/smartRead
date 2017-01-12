@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
@@ -20,11 +21,11 @@ public class User {
 	@Property
 	private String email;
 	@Reference
-	private ArrayList<Book> favourite;
+	private List<Book> favourite;
 	@Reference
-	private ArrayList<Book> read;
+	private List<Book> read;
 	@Reference
-	private ArrayList<Book> toread;
+	private List<Book> toread;
 
 	public User(){};
 	
@@ -32,6 +33,9 @@ public class User {
 		this.username = username;
 		this.password = password;
 		this.email = email;
+		favourite = new ArrayList<Book>();
+		read = new ArrayList<Book>();
+		toread = new ArrayList<Book>();
 	}
 	
 	public String getUsername() {
@@ -58,27 +62,27 @@ public class User {
 		this.email = email;
 	}
 
-	public ArrayList<Book> getFavourite() {
+	public List<Book> getFavourite() {
 		return favourite;
 	}
 
-	public void setFavourite(ArrayList<Book> favourite) {
+	public void setFavourite(List<Book> favourite) {
 		this.favourite = favourite;
 	}
 
-	public ArrayList<Book> getRead() {
+	public List<Book> getRead() {
 		return read;
 	}
 
-	public void setRead(ArrayList<Book> read) {
+	public void setRead(List<Book> read) {
 		this.read = read;
 	}
 
-	public ArrayList<Book> getToread() {
+	public List<Book> getToread() {
 		return toread;
 	}
 
-	public void setToread(ArrayList<Book> toread) {
+	public void setToread(List<Book> toread) {
 		this.toread = toread;
 	}
 
