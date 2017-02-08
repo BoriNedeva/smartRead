@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.ws.soap.AddressingFeature.Responses;
 
-import model.User;
+import model.BXUser;
 
 import org.mongodb.morphia.query.Query;
 
@@ -35,11 +35,11 @@ public class UserManager {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response login(LoginUser user) {
 
-		Query<User> query = DatastoreProvider.getDS().createQuery(User.class)
+		Query<BXUser> query = DatastoreProvider.getDS().createQuery(BXUser.class)
 				.disableValidation().filter("username", user.getUsername())
 				.filter("password", user.getPassword());
 
-		List<User> mem = query.asList();
+		List<BXUser> mem = query.asList();
 
 		if (mem.size() == 0) {
 			return Utils.responseBuilder(Response.Status.UNAUTHORIZED,
@@ -66,16 +66,16 @@ public class UserManager {
 	public Response registration(RegistrationUser user) {
 		// {registrationUser: {username: "sss", password: "ssss", email:
 		// "dsfs@kljfdk"}} - sample request
-		User member = new User(user.getUsername(), user.getPassword(),
+		BXUser member = new BXUser(user.getUsername(), user.getPassword(),
 				user.getEmail());
 		System.out.println(member.toString());
 		try {
-			List<User> memberName = DatastoreProvider.getDS()
-					.createQuery(User.class)
+			List<BXUser> memberName = DatastoreProvider.getDS()
+					.createQuery(BXUser.class)
 					.filter("username = ", member.getUsername()).asList();
 
-			List<User> memberEmail = DatastoreProvider.getDS()
-					.createQuery(User.class)
+			List<BXUser> memberEmail = DatastoreProvider.getDS()
+					.createQuery(BXUser.class)
 					.filter("email = ", member.getEmail()).asList();
 
 			if (memberName.size() != 0) {
@@ -87,9 +87,9 @@ public class UserManager {
 						ResponseMessages.ANOTHER_EMAIL);
 			} else {
 				DatastoreProvider.getDS().save(member);
-				Query query = DatastoreProvider.getDS().createQuery(User.class)
+				Query query = DatastoreProvider.getDS().createQuery(BXUser.class)
 						.filter("username", member.getUsername());
-				User saved = (User) query.get();
+				BXUser saved = (BXUser) query.get();
 				if (saved != null) {
 					return Utils.responseBuilder(Response.Status.OK,
 							ResponseMessages.SUCCESSFULL_REGISTER);

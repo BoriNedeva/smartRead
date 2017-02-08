@@ -9,8 +9,8 @@ import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Property;
 import org.mongodb.morphia.annotations.Reference;
 
-@Entity("user")
-public class User {
+@Entity("bx_users")
+public class BXUser {
 
 	@Id
 	private ObjectId id;
@@ -20,22 +20,28 @@ public class User {
 	private String password;
 	@Property
 	private String email;
-	@Reference
-	private List<Book> favourite;
-	@Reference
-	private List<Book> read;
-	@Reference
-	private List<Book> toread;
+	@Property
+	private String location;
+	@Property
+	private int age;
+	@Property
+	private int userId;
+//	@Reference
+//	private List<Book> favourite;
+//	@Reference
+//	private List<Book> read;
+//	@Reference
+//	private List<Book> toread;
 
-	public User(){};
+	public BXUser(){};
 	
-	public User(String username, String password, String email) {
+	public BXUser(String username, String password, String email) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
-		favourite = new ArrayList<Book>();
-		read = new ArrayList<Book>();
-		toread = new ArrayList<Book>();
+//		favourite = new ArrayList<Book>();
+//		read = new ArrayList<Book>();
+//		toread = new ArrayList<Book>();
 	}
 	
 	public String getUsername() {
@@ -58,38 +64,38 @@ public class User {
 		return email;
 	}
 
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public List<Book> getFavourite() {
-		return favourite;
+	
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setFavourite(List<Book> favourite) {
-		this.favourite = favourite;
-	}
-
-	public List<Book> getRead() {
-		return read;
-	}
-
-	public void setRead(List<Book> read) {
-		this.read = read;
-	}
-
-	public List<Book> getToread() {
-		return toread;
-	}
-
-	public void setToread(List<Book> toread) {
-		this.toread = toread;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password="
-				+ password + ", email=" + email + ", favourite=" + favourite
-				+ ", read=" + read + ", toread=" + toread + "]";
+				+ password + ", email=" + email + ", location=" + location
+				+ ", age=" + age + "]";
 	}
 }
