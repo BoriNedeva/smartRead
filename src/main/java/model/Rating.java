@@ -15,6 +15,17 @@ public class Rating {
 	@Property
 	private int rating;
 	
+	public Rating(){
+		
+	}
+	
+	public Rating(int userId, int rating, String isbn) {
+		super();
+		this.userId = userId;
+		this.rating = rating;
+		this.isbn = isbn;
+	}
+	
 	public int getUserId() {
 		return userId;
 	}

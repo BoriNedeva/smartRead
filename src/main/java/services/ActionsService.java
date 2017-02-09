@@ -13,14 +13,17 @@ import javax.ws.rs.core.Response;
 
 import model.Book;
 import model.BXUser;
+import model.Rating;
 
 import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 
 import util.Constants;
+import util.ResponseMessages;
 import util.Utils;
 import dao.DatastoreProvider;
 import dto.AddToListObj;
+import dto.RatingObj;
 
 @Path("actions")
 public class ActionsService {
@@ -93,5 +96,41 @@ public class ActionsService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addToListPre() {
 		return Utils.responseBuilder(Response.Status.OK, null);
+	}
+	
+	@OPTIONS
+	@Path("rate")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response ratePre() {
+		return Utils.responseBuilder(Response.Status.OK, null);
+	}
+	
+	@POST
+	@Path("rate")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response rate(RatingObj obj) {
+		
+		try{
+			Query<BXUser> query = DatastoreProvider.getDS().find(BXUser.class);
+			query.field("username").equal(obj.getUsername());
+			int userId = query.project("userId", true).asList().get(0).getUserId();
+			
+			Query<Rating> queryRating = DatastoreProvider.getDS().find(Rating.class);
+			queryRating.field("userId").equal(userId);
+			queryRating.field("isbn").equal(obj.getIsbn());
+			List<Rating> ratings = queryRating.asList();
+			if (ratings.isEmpty()){
+				Rating newRating = new Rating(userId, obj.getRating(), obj.getIsbn());
+				DatastoreProvider.getDS().save(newRating);
+			}else {
+				UpdateOperations<Rating> ops = DatastoreProvider.getDS().createUpdateOperations(Rating.class).set("rating", obj.getRating());
+				DatastoreProvider.getDS().update(queryRating, ops);
+			}
+			return Utils.responseBuilder(Response.Status.OK, null);
+		}catch (Exception e) {
+			return Utils.responseBuilder(Response.Status.INTERNAL_SERVER_ERROR, null);
+		}
 	}
 }

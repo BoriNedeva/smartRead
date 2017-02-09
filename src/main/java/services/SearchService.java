@@ -42,7 +42,7 @@ public class SearchService {
 		
 		Query<Book> query = DatastoreProvider.getDS().find(Book.class);
 		if (searchData.getName() != null && !searchData.getName().isEmpty()){
-			query.field("name").equal(searchData.getName());
+			query.field("title").equal(searchData.getName());
 		}
 		if (searchData.getAuthor() != null && !searchData.getAuthor().isEmpty()){
 			query.field("author").equal(searchData.getAuthor());
@@ -50,7 +50,14 @@ public class SearchService {
 //		if (searchData.getGenres() != null && !searchData.getGenres().isEmpty()){
 //			query.field("genre").in(searchData.getGenres());
 //		}
-		List<Book> found = query.asList();
+		List<Book> found;
+		if (searchData.getName() != null && !searchData.getName().isEmpty() 
+				|| searchData.getAuthor() != null && !searchData.getAuthor().isEmpty()){
+			found = query.asList();
+		}else{
+			found = DatastoreProvider.getDS().find(Book.class).limit(100).asList();
+		}
+		
 		return Utils.responseBuilder(Response.Status.OK, found);
 	}
 	
