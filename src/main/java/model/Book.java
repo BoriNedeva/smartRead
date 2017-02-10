@@ -21,7 +21,7 @@ public class Book {
 	@Property
 	private String image_url_m;
 	@Property
-	private String year;
+	private int year;
 //	@Property
 //	private String genre;
 	
@@ -69,11 +69,11 @@ public class Book {
 		this.image_url_m = image_url_m;
 	}
 
-	public String getYear() {
+	public int getYear() {
 		return year;
 	}
 
-	public void setYear(String year) {
+	public void setYear(int year) {
 		this.year = year;
 	}
 }

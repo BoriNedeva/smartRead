@@ -18,6 +18,7 @@ public class RestApp extends Application {
 		resources.add(services.UserManager.class);
 		resources.add(services.SearchService.class);
 		resources.add(services.ActionsService.class);
+		resources.add(services.RecommendationService.class);
 	}
 
 }

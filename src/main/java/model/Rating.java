@@ -19,6 +19,10 @@ public class Rating {
 		
 	}
 	
+	public ObjectId getId() {
+		return id;
+	}
+
 	public Rating(int userId, int rating, String isbn) {
 		super();
 		this.userId = userId;
