@@ -32,6 +32,25 @@ public class BXUser {
 //	private List<Book> read;
 //	@Reference
 //	private List<Book> toread;
+	boolean isKey;
+	boolean isClassed;
+
+	public boolean isKey() {
+		return isKey;
+	}
+	
+	public void setKey(boolean isKey) {
+		this.isKey = isKey;
+		this.isClassed = true;
+	}
+
+	public boolean isClassed() {
+		return isClassed;
+	}
+
+	public void setClassed(boolean isClassed) {
+		this.isClassed = isClassed;
+	}
 
 	public BXUser(){};
 	
@@ -42,6 +61,18 @@ public class BXUser {
 //		favourite = new ArrayList<Book>();
 //		read = new ArrayList<Book>();
 //		toread = new ArrayList<Book>();
+	}
+	
+	public BXUser(int age, int userId) {
+		this.age = age;
+		this.userId = userId;
+	}
+	
+	public BXUser(String str) {
+		String[] p = str.split(",");
+		this.age = Integer.parseInt(p[0]);
+		this.userId = Integer.parseInt(p[1]);
+		//this.y = Integer.parseInt(p[1]);
 	}
 	
 	public String getUsername() {

@@ -111,7 +111,7 @@ public class KNNRecommendation {
 		for (String isbn : candidatesIsbns) {
 			double sumRating = 0;
 			int occurrences = 0;
-			int weight = 0;
+			double weight = 0;
 			Iterator<Neighbour> iter = nearestNeighbours.iterator();
 			while (iter.hasNext()) {
 				int userId = iter.next().neigbourId;
