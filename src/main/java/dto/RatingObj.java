@@ -1,10 +1,16 @@
 package dto;
 
+import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement
-public class RatingObj {
+public class RatingObj implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String username;
 	private String isbn;
 	private int rating;
